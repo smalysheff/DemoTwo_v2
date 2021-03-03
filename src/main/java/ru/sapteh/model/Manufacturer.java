@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,5 +22,17 @@ public class Manufacturer {
     private String name;
 
     @Column
-    private Date startTime;
+    private Date startDate;
+
+    @OneToMany(mappedBy = "manufacturer")
+    Set<Product> products;
+
+    @Override
+    public String toString() {
+        return "Manufacturer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", startTime=" + startDate +
+                '}';
+    }
 }

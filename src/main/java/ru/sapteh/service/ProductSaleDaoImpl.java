@@ -18,7 +18,7 @@ public class ProductSaleDaoImpl implements Dao<ProductSale, Integer> {
     @Override
     public List<ProductSale> findByAll() {
         try(Session session = factory.openSession()){
-            return session.createQuery("FROM ProducSale", ProductSale.class).list();
+            return session.createQuery("FROM ProductSale", ProductSale.class).list();
         }
     }
 
