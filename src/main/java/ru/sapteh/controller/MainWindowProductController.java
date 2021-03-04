@@ -41,23 +41,17 @@ public class MainWindowProductController {
     public void initialize() throws IOException {
         initData();
 
-        flowPane.setAlignment(Pos.TOP_LEFT);
-        flowPane.setHgap(20);
-        flowPane.setVgap(15);
-        flowPane.setPadding(new Insets(10, 10, 10, 10));
+        initPane();
+
 
         for (Product product : products) {
-//            Image image = new Image("/school_logo.png");
-//            ImageView imageView = new ImageView();
-//            imageView.setFitHeight(200);
-//            imageView.setFitWidth(150);
-//            imageView.setImage(image);
-
             String titleBook = product.getTitle();
             flowPane.getChildren().add(getNode(
             product.getMainImagePath(),
                     String.format("%s...", titleBook.substring(0, 10)),
-                    String.format("%.2f руб.", product.getCost())));
+                    String.format("%.2f руб.", product.getCost()),
+                    product.getIsActive() == 1
+            ));
         }
 
     }
@@ -66,18 +60,23 @@ public class MainWindowProductController {
         SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Dao<Product, Integer> productDaoImpl = new ProductDaoImpl(factory);
         products.addAll(productDaoImpl.findByAll());
-
     }
 
+    private void initPane(){
+        flowPane.setAlignment(Pos.TOP_LEFT);
+        flowPane.setHgap(20);
+        flowPane.setVgap(15);
+        flowPane.setPadding(new Insets(10, 10, 10, 10));
+    }
 
-
-    private Node getNode(String url, String title, String cost){
+    private Node getNode(String url, String title, String cost, boolean isActive){
         ImageView imageView = new ImageView(new Image(url, true));
         imageView.setFitHeight(180);
         imageView.setFitWidth(160);
 
         Label titleLbl = new Label(title);
         Label costLbl = new Label(cost);
+        Label isActiveLbl = new Label("неактивен");
 
         FlowPane pane = new FlowPane(imageView, titleLbl, costLbl);
         pane.setHgap(10);
@@ -86,6 +85,11 @@ public class MainWindowProductController {
         pane.setAlignment(Pos.TOP_CENTER);
         pane.setPrefSize(220, 270);
         pane.setStyle("-fx-border-color: gray");
+
+        if(!isActive) {
+            pane.setStyle("-fx-background-color: #cbcaca; -fx-border-color: gray");
+            pane.getChildren().add(isActiveLbl);
+        }
 
         return pane;
     }
