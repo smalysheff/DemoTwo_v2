@@ -11,7 +11,7 @@ public class AppFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/authorizedWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/start.fxml"));
         stage.setTitle("English school");
         stage.setScene(new Scene(root));
         stage.getIcons().add(new Image("/school_logo.png"));

@@ -1,5 +1,6 @@
 package ru.sapteh.controller;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -29,9 +30,9 @@ import ru.sapteh.service.ProductDaoImpl;
 import java.io.IOException;
 import java.util.List;
 
-public class MainWindowProductController {
+public class MainController {
 
-    ObservableList<Product> products = FXCollections.observableArrayList();
+    private final ObservableList<Product> products = createData();
 
     @FXML
     FlowPane flowPane;
@@ -39,7 +40,6 @@ public class MainWindowProductController {
 
     @FXML
     public void initialize() throws IOException {
-        initData();
 
         initPane();
 
@@ -56,10 +56,11 @@ public class MainWindowProductController {
 
     }
 
-    private void initData(){
+    private ObservableList<Product> createData(){
         SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Dao<Product, Integer> productDaoImpl = new ProductDaoImpl(factory);
         products.addAll(productDaoImpl.findByAll());
+        return products;
     }
 
     private void initPane(){

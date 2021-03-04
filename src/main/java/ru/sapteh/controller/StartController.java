@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AuthorizedWindowController {
+public class StartController {
 
     @FXML
     private Button openProgramBtn;
@@ -27,7 +27,7 @@ public class AuthorizedWindowController {
     public void initialize(){
         openProgramBtn.setOnAction(event -> {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/view/mainWindowProduct.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("English school");
                 stage.setScene(new Scene(root));
