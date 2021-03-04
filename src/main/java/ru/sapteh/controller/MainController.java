@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,6 +22,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import org.controlsfx.control.GridView;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.sapteh.dao.Dao;
@@ -28,71 +30,49 @@ import ru.sapteh.model.Product;
 import ru.sapteh.service.ProductDaoImpl;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
 
-    private final ObservableList<Product> products = createData();
+    private final SessionFactory factory;
 
-    @FXML
-    FlowPane flowPane;
-
-
-    @FXML
-    public void initialize() throws IOException {
-
-        initPane();
-
-
-        for (Product product : products) {
-            String titleBook = product.getTitle();
-            flowPane.getChildren().add(getNode(
-            product.getMainImagePath(),
-                    String.format("%s...", titleBook.substring(0, 10)),
-                    String.format("%.2f руб.", product.getCost()),
-                    product.getIsActive() == 1
-            ));
-        }
-
+    public MainController(){
+        factory = new Configuration().configure().buildSessionFactory();
     }
 
-    private ObservableList<Product> createData(){
-        SessionFactory factory = new Configuration().configure().buildSessionFactory();
+    //Контейнер для всей карты
+    public GridView<MapTile> gridView;
+
+    //класс-посредник, отображающий URL изображения в ImageView
+    public ImagesAdapter gridViewAdapter;
+
+    private final ObservableList<Product> products = FXCollections.observableArrayList();
+    private final ObservableList<MapTile> mapTiles = FXCollections.observableArrayList();
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        initData();
+        gridViewAdapter = new ImagesAdapter(gridView);
+        gridViewAdapter.setData(mapTiles);
+        mapTiles.forEach(m -> System.out.println(m.getTileUrl()));
+    }
+
+
+    private void initData(){
         Dao<Product, Integer> productDaoImpl = new ProductDaoImpl(factory);
         products.addAll(productDaoImpl.findByAll());
-        return products;
-    }
 
-    private void initPane(){
-        flowPane.setAlignment(Pos.TOP_LEFT);
-        flowPane.setHgap(20);
-        flowPane.setVgap(15);
-        flowPane.setPadding(new Insets(10, 10, 10, 10));
-    }
-
-    private Node getNode(String url, String title, String cost, boolean isActive){
-        ImageView imageView = new ImageView(new Image(url, true));
-        imageView.setFitHeight(180);
-        imageView.setFitWidth(160);
-
-        Label titleLbl = new Label(title);
-        Label costLbl = new Label(cost);
-        Label isActiveLbl = new Label("неактивен");
-
-        FlowPane pane = new FlowPane(imageView, titleLbl, costLbl);
-        pane.setHgap(10);
-        pane.setPadding(new Insets(10));
-        pane.setOrientation(Orientation.VERTICAL);
-        pane.setAlignment(Pos.TOP_CENTER);
-        pane.setPrefSize(220, 270);
-        pane.setStyle("-fx-border-color: gray");
-
-        if(!isActive) {
-            pane.setStyle("-fx-background-color: #cbcaca; -fx-border-color: gray");
-            pane.getChildren().add(isActiveLbl);
+        for(Product product : products){
+            mapTiles.add(
+                    new MapTile(
+                            "/" + product.getMainImagePath(),
+                            product.getTitle(),
+                            product.getIsActive(),
+                            product.getCost())
+                    );
         }
-
-        return pane;
     }
-
 }

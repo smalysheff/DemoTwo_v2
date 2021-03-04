@@ -1,8 +1,11 @@
 package ru.sapteh;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
+import ru.sapteh.controller.MapTile;
 import ru.sapteh.dao.Dao;
 import ru.sapteh.model.Manufacturer;
 import ru.sapteh.model.Product;
@@ -11,6 +14,7 @@ import ru.sapteh.service.ManufacturerDaoImpl;
 import ru.sapteh.service.ProductDaoImpl;
 import ru.sapteh.service.ProductSaleDaoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProgramConsole {
