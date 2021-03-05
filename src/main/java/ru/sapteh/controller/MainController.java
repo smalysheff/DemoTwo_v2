@@ -57,7 +57,6 @@ public class MainController implements Initializable {
         initData();
         gridViewAdapter = new ImagesAdapter(gridView);
         gridViewAdapter.setData(mapTiles);
-        mapTiles.forEach(m -> System.out.println(m.getTileUrl()));
     }
 
 

@@ -3,8 +3,6 @@ package ru.sapteh.controller;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 
@@ -12,9 +10,6 @@ import java.io.IOException;
 
 //Класс служит для передачи объектов MapTile в GridView (через GridCell)
 public class ImagesAdapter {
-
-    //счетчик созданных ячеек GridView
-    private static int cellCounter = 0;
 
     private final GridView<MapTile> mapView;
 
@@ -29,12 +24,12 @@ public class ImagesAdapter {
     }
 
     //одна ячейка GridView
-    static class ImageCell extends GridCell<MapTile>{
+    class ImageCell extends GridCell<MapTile>{
 
         //ImageView, отображающийся в ячейке
         private ImageCellView viewController;
 
-        ImageCell(){
+        public ImageCell(){
             //Создаем ImageView для ячейки
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/imageCellView.fxml"));
             try {
@@ -44,24 +39,22 @@ public class ImagesAdapter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            System.out.println("Created new ImageCell: " + cellCounter++);
         }
 
         @Override
         protected void updateItem(MapTile item, boolean empty){
 
             //Здесь необходимо либо очистить ячейку, либо отобразить в ней новые данные
-
+//
             if (empty || item == null) {
                 //чистим
                 setGraphic(null);
                 viewController.clear();
             } else {
                 //кладем новое изображение
-                if(item.getIsActive() == 0){
-                    viewController.root.setStyle("-fx-background-color: #c9c5c5");
-                }
+//                if(item.getIsActive() == 0){
+//                    viewController.root.setStyle("-fx-background-color: #c9c5c5");
+//                }
                 viewController.update(item.getTileUrl(), item.getTitleBook(), item.getIsActive(), item.getCost());
                 setGraphic(viewController.root);
             }

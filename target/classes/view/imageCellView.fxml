@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
 
 <FlowPane fx:id="root" alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="285.0" prefWidth="220.0" style="-fx-border-color: gray" vgap="3.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.controller.ImageCellView">
    <children>
@@ -19,6 +19,6 @@
             <Insets />
          </FlowPane.margin></Label>
       <Label fx:id="costLbl" text="Label" />
-      <Label fx:id="isActiveLbl" text="Label" />
+      <Label fx:id="isActiveLbl" text="Label" textFill="#f50d11"/>
    </children>
 </FlowPane>
