@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -36,42 +37,42 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    private final SessionFactory factory;
 
-    public MainController(){
-        factory = new Configuration().configure().buildSessionFactory();
-    }
 
-    //Контейнер для всей карты
-    public GridView<MapTile> gridView;
+    @FXML
+    public BorderPane borderPane;
+    @FXML
+    public ScrollPane scrollPane;
+    @FXML
+    public TilePane tilePane;
 
-    //класс-посредник, отображающий URL изображения в ImageView
-    public ImagesAdapter gridViewAdapter;
-
-    private final ObservableList<Product> products = FXCollections.observableArrayList();
-    private final ObservableList<MapTile> mapTiles = FXCollections.observableArrayList();
+    //Список прямоугольниов для заполнения
+    ObservableList<Rectangle> rectangles = FXCollections.observableArrayList();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initData();
-        gridViewAdapter = new ImagesAdapter(gridView);
-        gridViewAdapter.setData(mapTiles);
-    }
 
+        //Получение размера сцены по ширине и присвоение значения tilePane
+        scrollPane.widthProperty().addListener((obj, oldValue, newValue) -> {
+            tilePane.setPrefWidth(newValue.doubleValue());
+            System.out.println(newValue);
+        });
 
-    private void initData(){
-        Dao<Product, Integer> productDaoImpl = new ProductDaoImpl(factory);
-        products.addAll(productDaoImpl.findByAll());
-
-        for(Product product : products){
-            mapTiles.add(
-                    new MapTile(
-                            "/" + product.getMainImagePath(),
-                            product.getTitle(),
-                            product.getIsActive(),
-                            product.getCost())
-                    );
+        for (int i = 0; i < 50; i++) {
+            rectangles.add(new Rectangle(200, 200, Color.color(.2, .4, .5)));
         }
+
+        tilePane.getChildren().addAll(rectangles);
+
+        rectangles.forEach(r -> {
+            r.setOnMouseClicked(event -> {
+                System.out.println(r.hashCode());
+                r.setFill(Color.RED);
+                System.out.println(r.getFill());
+            });
+        });
+
     }
+    
 }

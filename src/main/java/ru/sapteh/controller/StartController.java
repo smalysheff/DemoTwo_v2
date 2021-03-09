@@ -25,20 +25,18 @@ public class StartController {
 
     @FXML
     public void initialize(){
+
         openProgramBtn.setOnAction(event -> {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
                 Stage stage = new Stage();
-                stage.setTitle("English school");
+                stage.setTitle("Authorization");
                 stage.setScene(new Scene(root));
                 stage.getIcons().add(new Image("/school_logo.png"));
                 stage.show();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
 
             ((Button)event.getSource()).getScene().getWindow().hide();
         });
