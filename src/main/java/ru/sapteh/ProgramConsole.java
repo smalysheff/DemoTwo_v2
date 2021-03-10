@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
-import ru.sapteh.controller.MapTile;
 import ru.sapteh.dao.Dao;
 import ru.sapteh.model.Manufacturer;
 import ru.sapteh.model.Product;

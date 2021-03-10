@@ -1,5 +1,16 @@
-.grid {
-    -fx-background-color: blue, -fx-background ;
-    -fx-background-insets: 0, 1 ;
-    -fx-padding : 1 ;
+.label {
+
+}
+
+
+.flowPane {
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    -fx-border-color: #bdbbbb;
+    -fx-background-color: #e3e2e2;
+}
+
+.imageView {
+    -fx-background-radius: 20;
+    -fx-opacity: 50%;
 }

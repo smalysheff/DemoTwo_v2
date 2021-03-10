@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="NaN" prefWidth="NaN" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.controller.MainController">
-
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="NaN" prefWidth="NaN" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.controller.MainController">
    <top>
-      <HBox prefHeight="100.0" prefWidth="NaN" BorderPane.alignment="CENTER" alignment="CENTER" spacing="10" >
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="NaN" spacing="10" BorderPane.alignment="CENTER">
          <children>
-
-            <Button prefHeight="20" prefWidth="60" text="Hello"/>
-            <Button prefHeight="20" prefWidth="60" text="Hello"/>
-            <Button prefHeight="20" prefWidth="60" text="Hello"/>
+            <Button prefHeight="20" prefWidth="60" text="Hello" />
+            <Button prefHeight="20" prefWidth="60" text="Hello" />
+            <Button prefHeight="20" prefWidth="60" text="Hello" />
          </children>
       </HBox>
    </top>
-
    <bottom>
       <HBox prefHeight="100.0" prefWidth="NaN" BorderPane.alignment="CENTER" />
    </bottom>
-
    <center>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER">
          <content>
-            <TilePane fx:id="tilePane"  vgap="10" hgap="10"/>
+            <TilePane fx:id="tilePane" hgap="10" vgap="10" />
          </content>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
       </ScrollPane>
    </center>
-
 </BorderPane>

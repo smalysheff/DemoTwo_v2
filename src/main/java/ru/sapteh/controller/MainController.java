@@ -37,42 +37,58 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-
-
     @FXML
     public BorderPane borderPane;
+
     @FXML
     public ScrollPane scrollPane;
+
     @FXML
     public TilePane tilePane;
 
-    //Список прямоугольниов для заполнения
-    ObservableList<Rectangle> rectangles = FXCollections.observableArrayList();
-
+    private final ObservableList<Product> products = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        rubberWindow();
 
-        //Получение размера сцены по ширине и присвоение значения tilePane
-        scrollPane.widthProperty().addListener((obj, oldValue, newValue) -> {
-            tilePane.setPrefWidth(newValue.doubleValue());
-            System.out.println(newValue);
-        });
+        initData();
 
-        for (int i = 0; i < 50; i++) {
-            rectangles.add(new Rectangle(200, 200, Color.color(.2, .4, .5)));
+        try{
+            for(Product product : products){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tile.fxml"));
+                FlowPane flowPane = loader.load();
+
+                TileController tileController = loader.getController();
+                tileController.setData(product);
+
+
+
+                tilePane.getChildren().add(flowPane);
+
+                //цвет фона плитки, если не активен
+                if(product.getIsActive() == 0){
+                    flowPane.setStyle("-fx-background-color: #b4b3b3");
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        tilePane.getChildren().addAll(rectangles);
 
-        rectangles.forEach(r -> {
-            r.setOnMouseClicked(event -> {
-                System.out.println(r.hashCode());
-                r.setFill(Color.RED);
-                System.out.println(r.getFill());
-            });
+    }
+
+    private void rubberWindow() {
+        scrollPane.widthProperty().addListener((obj, oldValue, newValue) -> {
+            tilePane.setPrefWidth(newValue.doubleValue());
         });
+    }
 
+    private void initData(){
+        SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        Dao<Product, Integer> productDaoImpl = new ProductDaoImpl(factory);
+        products.addAll(productDaoImpl.findByAll());
     }
     
 }
