@@ -4,23 +4,37 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import ru.sapteh.model.Product;
 
 public class TileController {
 
     @FXML
-    public ImageView loadedImage;
+    private ImageView loadedImage;
 
     @FXML
-    public Label bookTitleLbl;
+    private Label bookTitleLbl;
 
     @FXML
-    public Label costLbl;
+    private Label costLbl;
 
     @FXML
-    public Label isActiveLbl;
+    private Label isActiveLbl;
 
-    public void setData(Product product){
+    @FXML
+    private void click(MouseEvent event){
+        myListener.onClickListener(product);
+    }
+
+    private MyListener myListener;
+
+    private Product product;
+
+
+
+    public void setData(Product product, MyListener myListener){
+        this.product = product;
+        this.myListener = myListener;
         Image image = new Image("/" + product.getMainImagePath());
         loadedImage.setImage(image);
         bookTitleLbl.setText(subTitle(product.getTitle()));
@@ -28,6 +42,7 @@ public class TileController {
         isActiveLbl.setText(productActive(product.getIsActive()));
     }
 
+    //обрезаем название книги до 15 символов
     private String subTitle(String title){
         if(title.length() < 15)
             return title;

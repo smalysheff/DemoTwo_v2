@@ -8,7 +8,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="285.0" prefWidth="220.0" styleClass="flowPane" stylesheets="@../styles/style.css" vgap="3.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.controller.TileController">
+<FlowPane onMousePressed="#click" alignment="TOP_CENTER" columnHalignment="CENTER"
+          maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+          minWidth="-Infinity"  orientation="VERTICAL"
+          prefHeight="285.0" prefWidth="220.0" styleClass="flowPane" stylesheets="@../styles/style.css"
+          vgap="3.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.controller.TileController">
    <children>
       <ImageView fx:id="loadedImage" fitHeight="201.0" fitWidth="174.0" opacity="0.84" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
          <FlowPane.margin>

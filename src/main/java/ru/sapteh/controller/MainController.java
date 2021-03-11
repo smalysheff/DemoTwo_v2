@@ -23,6 +23,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import lombok.SneakyThrows;
 import org.controlsfx.control.GridView;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -48,34 +50,52 @@ public class MainController implements Initializable {
 
     private final ObservableList<Product> products = FXCollections.observableArrayList();
 
+    private MyListener myListener;
+
+    FlowPane flowPane;
+
+    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rubberWindow();
-
         initData();
 
-        try{
-            for(Product product : products){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tile.fxml"));
-                FlowPane flowPane = loader.load();
+        // Открытие нового окна
+        if(!products.isEmpty()){
+            Stage stage = new Stage();
+            stage.setTitle("Product info");
 
-                TileController tileController = loader.getController();
-                tileController.setData(product);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/productItem.fxml"));
+            AnchorPane anchorPane = loader.load();
 
+            stage.setScene(new Scene(anchorPane));
+            stage.show();
 
+            ProductItemController productController = loader.getController();
 
-                tilePane.getChildren().add(flowPane);
-
-                //цвет фона плитки, если не активен
-                if(product.getIsActive() == 0){
-                    flowPane.setStyle("-fx-background-color: #b4b3b3");
+            myListener = new MyListener() {
+                @Override
+                public void onClickListener(Product product) {
+                    productController.setData(product);
                 }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            };
         }
 
+
+        for(Product product : products){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tile.fxml"));
+            flowPane = loader.load();
+
+            TileController tileController = loader.getController();
+            tileController.setData(product, myListener);
+
+            tilePane.getChildren().add(flowPane);
+
+            //цвет фона плитки, если не активен
+            if(product.getIsActive() == 0){
+                flowPane.setStyle("-fx-background-color: #b4b3b3");
+            }
+        }
 
     }
 
