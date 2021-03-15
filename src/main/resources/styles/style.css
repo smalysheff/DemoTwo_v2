@@ -9,6 +9,12 @@
     -fx-border-color: #bdbbbb;
     -fx-background-color: #e3e2e2;
 }
+.flowPane:hover{
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    -fx-border-color: #bdbbbb;
+    -fx-background-color: #4df5f5;
+}
 
 .imageView {
     -fx-background-radius: 20;
